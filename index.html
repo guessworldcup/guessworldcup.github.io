@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>竞猜世界杯</title> 
+	<script type="text/javascript" src="./node_modules/web3/dist/web3.min.js"></script>
+	<script type="text/javascript" src="./ticket_abi.js"></script>
+	</head>
+<body>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script type="text/javascript">
+
+		var userAccount;
+
+		//web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"))
+		web3 = new Web3(web3.currentProvider);
+		var userAccount = web3.eth.accounts[0];
+		
+		var address = '0x0FEEb51e33Fe1Fdfc9c06Aee8827e9333c755cD5';
+
+		var contarctTikets = web3.eth.contract(ticketsABI).at(address);
+
+		cp1time = 1529114400;
+		cp2time = 1529114400;
+		cp3time = 1529092800;
+		cp4time = 1529103600;
+
+
+	   	///1st Match
+	   		contarctTikets.firstPlaytime.sendTransaction(cp1time,{from: userAccount,gas:1900000})
+	   		.on("receipt", function(receipt) {
+
+        	})
+	   		.on("error", function(error) {
+        	});
+	   	///2nd Match
+	   		contarctTikets.secondPlaytime.sendTransaction(cp2time,{from: userAccount,gas:1900000})
+	   		.on("receipt", function(receipt) {
+
+        	})
+	   		.on("error", function(error) {
+        	});	 
+	   	///3rd Match
+	   		contarctTikets.thirdPlaytime.sendTransaction(cp3time,{from: userAccount,gas:1900000})
+	   		.on("receipt", function(receipt) {
+
+        	})
+	   		.on("error", function(error) {
+        	});
+	   	///4th Match
+	   		contarctTikets.fourthPlaytime.sendTransaction(cp4time,{from: userAccount,gas:1900000})
+	   		.on("receipt", function(receipt) {
+
+        	})
+	   		.on("error", function(error) {
+        	});
+
+
+		function inform(){
+
+			alert('您已经成功申请购入，现在正在将交易写入区块中(需要的时间根据当时区块拥挤程度会不同). 可以点击“https://etherscan.io/address/0x0feeb51e33fe1fdfc9c06aee8827e9333c755cd5”查看合约的交易状态。如果输入数量不在0.001和200之间，或者是非数字，交易不成功。ETH将返回您的账户.You have successfully applied for a purchase and are now writing the transaction into the blockchain(writing time depends on eth blockchain), you can click "https://etherscan.io/address/0x0feeb51e33fe1fdfc9c06aee8827e9333c755cd5" to check your transaction status. ETH will back to your address if this transaction fail, example like not between 0.001eth and 200eth, or not a pure number etc...');
+		}
+
+		/*
+      	window.addEventListener('load', function() {
+
+  		// 检查web3是否已经注入到(Mist/MetaMask)
+  		if (typeof web3 !== 'undefined') {
+    	// 使用 Mist/MetaMask 的提供者
+		    web3js = new Web3(web3.currentProvider);
+		 } else {
+			alert('请使用Chome或者Firefox浏览器安装Metamask');
+		  }
+		})
+		*/
+
+      	/*
+		if (typeof web3 !== 'undefined') {
+        	web3 = new Web3(web3.currentProvider);
+    		} else {
+        	web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+    	}
+		*/
+
+    	contarctTikets.firstMatchDisplay(
+    		function(error,result){
+
+    			if (!error) {
+    				$("#firstwin").html(result[0]+' address '+result[1]/1000000000000000000+'eth');
+    				$("#firsttie").html(result[2]+' address '+result[3]/1000000000000000000+'eth');
+    				$("#firstlost").html(result[4]+' address '+result[5]/1000000000000000000+'eth');
+    			}
+    			else{
+    				console.error(error);
+    			}
+    		}
+    	);
+
+    	contarctTikets.secondMatchDisplay(
+    		function(error,result){
+
+    			if (!error) {
+    				$("#secondwin").html(result[0]+' address '+result[1]/1000000000000000000+'eth');
+    				$("#secondtie").html(result[2]+' address '+result[3]/1000000000000000000+'eth');
+    				$("#secondlost").html(result[4]+' address '+result[5]/1000000000000000000+'eth');
+    			}
+    			else{
+    				console.error(error);
+    			}
+    		}
+    	);
+
+    	contarctTikets.thirdMatchDisplay(
+    		function(error,result){
+
+    			if (!error) {
+    				$("#thirdwin").html(result[0]+' address '+result[1]/1000000000000000000+'eth');
+    				$("#thirdtie").html(result[2]+' address '+result[3]/1000000000000000000+'eth');
+    				$("#thirdlost").html(result[4]+' address '+result[5]/1000000000000000000+'eth');
+    			}
+    			else{
+    				console.error(error);
+    			}
+    		}
+    	);
+
+    	contarctTikets.fourthMatchDisplay(
+    		function(error,result){
+
+    			if (!error) {
+    				$("#fourthwin").html(result[0]+' address '+result[1]/1000000000000000000+'eth');
+    				$("#fourthtie").html(result[2]+' address '+result[3]/1000000000000000000+'eth');
+    				$("#fourthlost").html(result[4]+' address '+result[5]/1000000000000000000+'eth');
+    			}
+    			else{
+    				console.error(error);
+    			}
+    		}
+    	);
+
+
+	   	//1st payable
+	   	
+	   	function firstPayableWin(){
+	   		inform();
+	   		var ethercounts=document.getElementById("input1").value;
+	   		contarctTikets.firstWin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+	   	function firstPayableTie(){
+	   		inform();
+	   		var ethercounts = document.getElementById("input2").value;
+	   		contarctTikets.firstTie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+	   	function firstPayableLost(){
+	   		inform();
+	   		var ethercounts=document.getElementById("input3").value;
+	   		contarctTikets.firstlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+		
+	   	//2nd payable
+		function secondPayableWin(){
+			inform();
+	   		var ethercounts=document.getElementById("input4").value;
+	   		contarctTikets.secondwin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+	   	function secondPayableTie(){
+	   		inform();
+	   		var ethercounts = document.getElementById("input5").value;
+	   		contarctTikets.secondtie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+	   	function secondPayableLost(){
+	   		inform();
+	   		var ethercounts=document.getElementById("input6").value;
+	   		contarctTikets.secondlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+		//3rd payable
+	   	function thirdPayableWin(){
+	   		inform();
+	   		var ethercounts=document.getElementById("input7").value;
+	   		contarctTikets.thirdWin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+	   	function thirdPayableTie(){
+	   		inform();
+	   		var ethercounts = document.getElementById("input8").value;
+	   		contarctTikets.thirdTie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+	   	function thirdPayableLost(){
+	   		inform();
+	   		var ethercounts=document.getElementById("input9").value;
+	   		contarctTikets.thirdlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+
+	   	//4th payable
+	   	function fourthPayableWin(){
+	   		inform();
+	   		var ethercounts=document.getElementById("input10").value;
+	   		contarctTikets.fourthwin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+	   	function fourthPayableTie(){
+	   		inform();
+	   		var ethercounts = document.getElementById("input11").value;
+	   		contarctTikets.fourthtie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+	   	function fourthPayableLost(){
+	   		inform();
+	   		var ethercounts=document.getElementById("input12").value;
+	   		contarctTikets.fourthlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000});
+	   	}
+
+
+
+	   	function FirstWinDelivery(){
+	   		contarctTikets.firstWinDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+	   	function FirstTieDelivery(){
+	   		contarctTikets.firstTieDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+	   	function FirstLostDelivery(){
+	   		contarctTikets.firstlostDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+
+	   	function SecondWinDelivery(){
+	   		contarctTikets.secondWinDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+	   	function SecondTieDelivery(){
+	   		contarctTikets.secondTieDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+	   	function SecondLostDelivery(){
+	   		contarctTikets.secondlostDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+
+	   	function ThirdWinDelivery(){
+	   		contarctTikets.thirdWinDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+	   	function ThirdTieDelivery(){
+	   		contarctTikets.thirdTieDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+	   	function ThirdLostDelivery(){
+	   		contarctTikets.thirdlostDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+
+	   	function FourthWinDelivery(){
+	   		contarctTikets.fourthWinDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+	   	function FourthTieDelivery(){
+	   		contarctTikets.fourthTieDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+
+	   	function FourthLostDelivery(){
+	   		contarctTikets.fourthlostDelivery.sendTransaction({from:userAccount,gas:1000000});
+	   	}
+	   	
+	</script>
+
+
+
+	<p id="display"></p>
+	<div align="center">
+		<img src="32/吉祥物.jpg" width="20%">
+	</div>
+	<div align="center" style="width: 1400px;margin: auto;">
+		<div align="left">
+			<p> 我只是一个区块链爱好者，我知道这个前端页面非常丑，但是正常使用没有问题 -_-!!。由于有这个想法太晚，所以没有时间开发前端页面，况且前端页面我也不太会(尴尬)，如果谁想设计前端页面，请发送邮件到最下方地址，我会有偿请您设计(笑脸...)</p>
+			<p>No translation, otherwise, this web will be more ugly. You can translate above word from Chinese to your language(smile......)</p>
+		</div>
+	</div>
+
+	<div style="background-color: rgba(74,180,255,0.5); position: relative;height: 450px;width: 1400px;margin: auto;border-radius: 20px;">
+		
+		<ul>
+			<li style="font-size: 15px">这是一个去中心化体彩应用,不会涉及到任何赔率问题，成员获得的奖金完全由全网共同决定，奖金分配办法请详细阅读后面内容</li>
+			<listyle="font-size: 15px">This is a decentralized "world cup" lottery APP.The bonus for each user is determined by the awareness of the whole network,instead of odds. Detail please find in below wording.</li>
+			<li style="font-size: 15px">点击对应的胜负关系,输入ETH数量,然后点击确定,等待写入完成后刷新页面.每场比赛开场前10分钟停止购买</li>
+			<listyle="font-size: 15px">Choose match and eth counts, then waiting write in blocks and refresh web.10 minutes berfor kickoff is the period to enter eth</li>
+			<li style="font-size: 15px; margin-top: 10px">每次输入的ETH数量在0.001eth~200eth之间</li>
+			<listyle="font-size: 15px">You have to input 0.001eth~200eth one time</li>
+			<li style="font-size: 15px; margin-top: 10px">
+				为了避免人为对结果的干扰,每个Metamask账户只允许第一个地址购买比赛(比如一个人用10个账户购买比赛会严重干扰结果)
+			</li>
+			<listyle="font-size: 15px; margin-top: 10px">
+				Only one address(the first one) which in your Metamask accounts allowed to be buy match. That will bring about misunderstand if one accounts buy match used 10 address. 
+			</li>
+			<li style="font-size: 15px; margin-top: 10px">比赛完24小时之内，派发胜出者的奖金</li>
+			<listyle="font-size: 15px">Will send bonus within 24 hours of the end of match</li>
+			<li style="font-size: 15px; margin-top: 10px">以第一场比赛为例，比赛完成后是以下数量，假设俄罗斯赢</li>
+			<listyle="font-size: 15px">Let's take a example like 1st match, eth counts like below image, assumed Russia win</li>
+
+				<table border="1px" style="margin: auto;border-collapse: collapse;" >
+					<tr>
+						<th width="80px" align="center">主(Home)</th>
+						<th width="100px" align="center">客(Visiters)</th>
+						<th width="120px" align="center">让球(Handicap)</th>
+						<th width="50px" align="center">主胜(Home Win)</th>
+						<th width="50px" align="center">主平(Home Tie)</th>
+						<th width="50px" align="center">主负(Home Lost)</th>
+					</tr>
+
+					<tr>
+					<td rowspan="2" height="30px">
+						<div align="center">
+							俄罗斯 Russia
+						</div>
+					</td>
+					<td rowspan="2" height="30px">
+						<div align="center">
+							沙特 Saudi Arabia
+						</div>
+					</td>
+					<td align="center" height="40px">0</td>
+					<td align="center" width="200px" style="font-size: 15px">5个账户22个ETH(total 5 accounts and 22eth)</td>
+					<td align="center" width="200px" style="font-size: 15px">3个账户9个ETH(total 3 accounts and 9eth)</td>
+					<td align="center" width="200px" style="font-size: 15px">2个账户3个ETH(total 2 accounts and 3eth)</td>
+
+				</table>
+				<li style="font-size: 15px; margin-top: 10px">假设买入俄罗斯胜利的那5个账户分别买入7eth,5eth,3eth,2eth,5eth，那么第一个账户(买入7eth的账户)得到的奖金是(22+9+3)*7/22=10.81个eth,买入平和负的账户没有奖金。假设最终俄罗斯负，没有人买入俄罗斯负，eth不会返还。</li>
+				<listyle="font-size: 15px">If 5 accounts that buy Russia win are 7eth,5eth,3eth,2eth,5eth, and then,the 1st account(which buy 7eth) will get (22+9+3)*7/22=10.81eth. Other accounts which buy tie or lost will not get bonus. eth will not be resend to user if Russia lost while no accounts by Russia lost.</li>		
+		</ul>
+
+	</div>
+		
+		<table border="2px" style="margin: auto; margin-top: 10px; border-collapse: collapse;">
+			
+			<caption style="font-size: 20px;background-color: rgb(189,218,122);">比赛趋势(The "vote" trend for each match now)</caption>
+
+			<tr>
+				<th width="150px">主(Home)</th>
+				<th width="150px">客(Visiters)</th>
+				<th width="50px">让球(Handicap)</th>
+				<th width="150px">主胜(Home Win)</th>
+				<th width="150px">主平(Home Tie)</th>
+				<th width="150px">主负(Home Lost)</th>
+			</tr>
+
+
+			<!----------------1st match------------------>
+			<tr>
+				<td rowspan="1" height="80px">
+					<div align="center">
+						葡萄牙 Portugal
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/葡萄牙.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td rowspan="1" height="80px" >
+
+					<div align="center">
+						西班牙 Spain
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/西班牙.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td align="center">0</td>
+				<td bgcolor=#A2CB45 id="firstwin"></td>
+
+				<td bgcolor=#A2CB45 id="firsttie"></td>
+				<td bgcolor=#A2CB45 id="firstlost"></td>
+			</tr>
+			
+
+			<!----------------2nd match------------------>
+			<tr>
+				<td rowspan="1" height="80px">
+					<div align="center">
+						葡萄牙 Portugal
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/葡萄牙.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td rowspan="1" height="80px" >
+
+					<div align="center">
+						西班牙 Spain
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/西班牙.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+			
+				<td align="center">+1</td>
+				<td bgcolor=#99FFCC id="secondwin"></td>
+				<td bgcolor=#99FFCC id="secondtie"></td>
+				<td bgcolor=#99FFCC id="secondlost"></td>
+			</tr>
+
+			
+
+
+			<!----------------3rd match------------------>
+			<tr>
+				<td rowspan="1" height="80px">
+					<div align="center">
+						埃及 Egypt
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/埃及.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td rowspan="1" height="80px">
+
+					<div align="center">
+						乌拉圭 Uruguay
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/乌拉圭.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td align="center">0</td>
+				<td bgcolor=#A2CB45 id="thirdwin"></td>
+				<td bgcolor=#A2CB45 id="thirdtie"></td>
+				<td bgcolor=#A2CB45 id="thirdlost"></td>
+			</tr>
+
+
+
+			<!----------------4th match------------------>
+			<tr>
+				<td rowspan="1" height="80px">
+					<div align="center">
+						摩洛哥 Morocco
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/摩洛哥.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td rowspan="1" height="80px">
+
+					<div align="center">
+						伊朗 Iran
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/伊朗.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+			
+				<td align="center">0</td>
+				<td bgcolor=#99FFCC id="fourthwin"></td>
+				<td bgcolor=#99FFCC id="fourthtie"></td>
+				<td bgcolor=#99FFCC id="fourthlost"></td>
+			</tr>
+		</table>
+
+
+
+		<table border="2px" style="margin: auto; margin-top: 30px; border-collapse: collapse;">
+
+			<caption style="font-size: 20px;background-color: rgb(189,218,122);">在这里输入eth数量(You can enter eth counts in the "input box",and click button)</caption>
+			<tr>
+				<th width="150px">主(Home)</th>
+				<th width="150px">客(Visiters)</th>
+				<th width="50px">让球(Handicap)</th>
+				<th width="150px">主胜(Home Win)</th>
+				<th width="150px">主平(Home Tie)</th>
+				<th width="150px">主负(Home Lost)</th>
+			</tr>
+
+
+
+			<!----------------1st match------------------>
+			<tr>
+				<td rowspan="1" height="80px">
+					<div align="center">
+						葡萄牙 Portugal
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/葡萄牙.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td rowspan="1" height="80px" >
+
+					<div align="center">
+						西班牙 Spain
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/西班牙.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td align="center">0</td>
+
+				<td bgcolor=#A2CB45>
+					<input type="text" id="input1">
+					<button onclick="firstPayableWin()">提交(Submit)</button>
+				</td>
+
+				<td bgcolor=#A2CB45>
+					<input type="text" id="input2">
+					<button onclick="firstPayableTie()">提交(Submit)</button>
+				</td>
+
+				<td bgcolor=#A2CB45>
+					<input type="text" id="input3">
+					<button onclick="firstPayableLost()">提交(Submit)</button>
+				</td>
+			</tr>
+
+
+			
+			<!----------------2nd match------------------>
+			<tr>
+				<td rowspan="1" height="80px">
+					<div align="center">
+						葡萄牙 Portugal
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/葡萄牙.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td rowspan="1" height="80px" >
+
+					<div align="center">
+						西班牙 Spain
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/西班牙.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td align="center">+1</td>
+
+
+				<td bgcolor=#99FFCC>
+					<input type="text" id="input4">
+					<button onclick="secondPayableWin()">提交(Submit)</button>
+				</td>
+				<td bgcolor=#99FFCC>
+					<input type="text" id="input5">
+					<button onclick="secondPayableTie()">提交(Submit)</button>
+				</td>
+				<td bgcolor=#99FFCC>
+					<input type="text" id="input6">
+					<button onclick="secondPayableLost()">提交(Submit)</button>
+				</td>
+			</tr>
+
+
+			<!----------------3rd match------------------>
+			<tr>
+				<td rowspan="1" height="80px">
+					<div align="center">
+						埃及 Egypt
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/埃及.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td rowspan="1" height="80px">
+
+					<div align="center">
+						乌拉圭 Uruguay
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/乌拉圭.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td align="center">0</td>
+				<td bgcolor=#A2CB45>
+					<input type="text" id="input7">
+					<button onclick="thirdPayableWin()">提交(Submit)</button>
+				</td>
+				<td bgcolor=#A2CB45>
+					<input type="text" id="input8">
+					<button onclick="thirdPayableTie()">提交(Submit)</button>
+				</td>
+				<td bgcolor=#A2CB45>
+					<input type="text" id="input9">
+					<button onclick="thirdPayableLost()">提交(Submit)</button>
+				</td>
+			</tr>
+
+
+
+
+			<!----------------4th match------------------>
+			<tr>
+				<td rowspan="1" height="80px">
+					<div align="center">
+						摩洛哥 Morocco
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/摩洛哥.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+				<td rowspan="1" height="80px">
+
+					<div align="center">
+						伊朗 Iran
+					</div>
+					<div align="center" style="margin-top: 5px">
+						<img src="32/伊朗.jpg" width="100px" height="50px" border="1px">
+					</div>
+				</td>
+			
+				<td align="center">0</td>
+				<td bgcolor=#99FFCC>
+					<input type="text" id="input10">
+					<button onclick="fourthPayableWin()">提交(Submit)</button>
+				</td>
+				<td bgcolor=#99FFCC>
+					<input type="text" id="input11">
+					<button onclick="fourthPayableTie()">提交(Submit)</button>
+				</td>
+				<td bgcolor=#99FFCC>
+					<input type="text" id="input12">
+					<button onclick="fourthPayableLost()">提交(Submit)</button>
+				</td>
+			</tr>
+
+		</table>
+
+	<div align="center">	
+	<table>
+		<tr>
+			<button style="background-color: white; font: white;border:0;" onclick="FirstWinDelivery()">1W</button>
+			<button style="background-color: white; font: white;border:0;" onclick="FirstTieDelivery()"> 1T</button>
+			<button style="background-color: white; font: white;border:0;" onclick="FirstLostDelivery()"> 1L</button>
+
+			<button style="background-color: white; font: white;border:0;" onclick="SecondWinDelivery()"> 2W</button>
+			<button style="background-color: white; font: white;border:0;" onclick="SecondTieDelivery()">2T</button>
+			<button style="background-color: white; font: white;border:0;" onclick="SecondLostDelivery()"> 2L</button>
+
+			<button style="background-color: white; font: white;border:0;" onclick="ThirdWinDelivery()"> 3W</button>
+			<button style="background-color: white; font: white;border:0;" onclick="ThirdTieDelivery()"> 3T</button>
+			<button style="background-color: white; font: white;border:0;" onclick="ThirdLostDelivery()"> 3L</button>
+
+			<button style="background-color: white; font: white;border:0;" onclick="FourthWinDelivery()"> 4W</button>
+			<button style="background-color: white; font: white;border:0;" onclick="FourthTieDelivery()"> 4T</button>
+			<button style="background-color: white; font: white;border:0;" onclick="FourthLostDelivery()"> 4L</button>
+		</tr>
+	</table>
+	</div>
+
+	<div style="margin-top: 10px" align="center">
+		开发者邮箱地址: Hamxicathena@outlook.com<br>
+		Developper E-mail: Hamxicathena@outlook.com
+	</div>
+</body>
+</html>
