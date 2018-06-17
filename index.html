@@ -22,7 +22,7 @@
 		cp1time = 1529276400;
 		cp2time = 1529276400;
 		cp3time = 1529265600;
-		cp4time = 1529204400;
+		cp4time = 1529352000;
 
 
 		function CP1time(){
@@ -53,6 +53,13 @@
 		function inform(){
 
 			alert('您已经成功申请购入，现在正在将交易写入区块中(需要的时间根据当时区块拥挤程度会不同). 可以点击“https://etherscan.io/address/0x0feeb51e33fe1fdfc9c06aee8827e9333c755cd5”查看合约的交易状态。如果输入数量不在0.001和200之间，或者是非数字，交易不成功。ETH将返回您的账户.You have successfully applied for a purchase and are now writing the transaction into the blockchain(writing time depends on eth blockchain), you can click "https://etherscan.io/address/0x0feeb51e33fe1fdfc9c06aee8827e9333c755cd5" to check your transaction status. ETH will back to your address if this transaction fail, example like not between 0.001eth and 200eth, or not a pure number etc...');
+		}
+
+		function informeth(){
+
+			alert('请确定输入eth的数量，输入数量在0.001到200之间。Please confirm the eth counts, you have to enter 0.001eth~200eth');
+
+
 		}
 
 		/*
@@ -136,91 +143,162 @@
 	   	//1st payable
 	   	
 	   	function firstPayableWin(){
-	   		inform();
+	   		
 	   		var ethercounts=document.getElementById("input1").value;
-	   		contarctTikets.firstWin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.firstWin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
 	   	}
 
 	   	function firstPayableTie(){
-	   		inform();
 	   		var ethercounts = document.getElementById("input2").value;
-	   		contarctTikets.firstTie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.firstTie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
-	   	function firstPayableLost(){
-	   		inform();
+	   	function firstPayableLost(){		
 	   		var ethercounts=document.getElementById("input3").value;
-	   		contarctTikets.firstlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.firstlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 		
 	   	//2nd payable
 		function secondPayableWin(){
-			inform();
+
 	   		var ethercounts=document.getElementById("input4").value;
-	   		contarctTikets.secondwin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.secondwin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
 	   	function secondPayableTie(){
-	   		inform();
+
 	   		var ethercounts = document.getElementById("input5").value;
-	   		contarctTikets.secondtie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.secondtie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
 	   	function secondPayableLost(){
-	   		inform();
+
 	   		var ethercounts=document.getElementById("input6").value;
-	   		contarctTikets.secondlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.secondlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
 		//3rd payable
 	   	function thirdPayableWin(){
-	   		inform();
+
 	   		var ethercounts=document.getElementById("input7").value;
-	   		contarctTikets.thirdWin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.thirdWin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
 	   	function thirdPayableTie(){
-	   		inform();
+
 	   		var ethercounts = document.getElementById("input8").value;
-	   		contarctTikets.thirdTie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.thirdTie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
 	   	function thirdPayableLost(){
-	   		inform();
+
 	   		var ethercounts=document.getElementById("input9").value;
-	   		contarctTikets.thirdlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.thirdlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
 
 	   	//4th payable
 	   	function fourthPayableWin(){
-	   		inform();
+
 	   		var ethercounts=document.getElementById("input10").value;
-	   		contarctTikets.fourthwin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.fourthwin.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
 	   	function fourthPayableTie(){
-	   		inform();
+
 	   		var ethercounts = document.getElementById("input11").value;
-	   		contarctTikets.fourthtie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.fourthtie.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
 	   	function fourthPayableLost(){
-	   		inform();
+
 	   		var ethercounts=document.getElementById("input12").value;
-	   		contarctTikets.fourthlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
-	   		});
+	   		if (ethercounts >= 0.001 && ethercounts <= 200){
+	   			inform();
+	   			contarctTikets.fourthlost.sendTransaction({from:userAccount,value:web3.toWei(ethercounts,"ether"),gas:1900000},function(err,result){
+	   			});
+	   		}else{
+	   			informeth();
+	   		}
+
 	   	}
 
 
@@ -457,19 +535,19 @@
 			<tr>
 				<td rowspan="1" height="80px">
 					<div align="center">
-						克罗地亚 Croatia
+						瑞典 Sweden
 					</div>
 					<div align="center" style="margin-top: 5px">
-						<img src="32/克罗地亚.jpg" width="100px" height="50px" border="1px">
+						<img src="32/瑞典.jpg" width="100px" height="50px" border="1px">
 					</div>
 				</td>
 				<td rowspan="1" height="80px">
 
 					<div align="center">
-						尼日利亚 Nigeria
+						韩国 Korea
 					</div>
 					<div align="center" style="margin-top: 5px">
-						<img src="32/尼日利亚.jpg" width="100px" height="50px" border="1px">
+						<img src="32/韩国.jpg" width="100px" height="50px" border="1px">
 					</div>
 				</td>
 			
@@ -613,19 +691,19 @@
 			<tr>
 				<td rowspan="1" height="80px">
 					<div align="center">
-						克罗地亚 Croatia
+						瑞典 Sweden
 					</div>
 					<div align="center" style="margin-top: 5px">
-						<img src="32/克罗地亚.jpg" width="100px" height="50px" border="1px">
+						<img src="32/瑞典.jpg" width="100px" height="50px" border="1px">
 					</div>
 				</td>
 				<td rowspan="1" height="80px">
 
 					<div align="center">
-						尼日利亚 Nigeria
+						韩国 Korea
 					</div>
 					<div align="center" style="margin-top: 5px">
-						<img src="32/尼日利亚.jpg" width="100px" height="50px" border="1px">
+						<img src="32/韩国.jpg" width="100px" height="50px" border="1px">
 					</div>
 				</td>
 			
